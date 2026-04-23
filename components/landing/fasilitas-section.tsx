@@ -1,8 +1,7 @@
 "use client";
 
 import { easeOut } from "@/lib/animations";
-import { AnimatePresence, motion } from "motion/react";
-import { useInView } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 

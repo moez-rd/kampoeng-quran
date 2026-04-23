@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { useInView } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
+import { useRef, useState } from "react";
 
 import { easeOut } from "@/lib/animations";
 import Image from "next/image";
@@ -47,8 +46,6 @@ export function ProgramSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [activeTab, setActiveTab] = useState("mts");
-
-  const activeData = tabs.find((t) => t.value === activeTab)!;
 
   return (
     <section id="program-pendidikan" className="bg-white px-6 py-24">
@@ -103,34 +100,36 @@ export function ProgramSection() {
           </div>
 
           {/* Tab content */}
-          <AnimatePresence mode="wait">
-            {tabs
-              .filter((t) => t.value === activeTab)
-              .map((t) => (
-                <motion.div
-                  key={t.value}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, ease: easeOut }}
-                  className="grid gap-10 lg:grid-cols-3 lg:items-start"
-                >
-                  <div className="mb-4 flex flex-wrap items-center gap-3">
-                    <h3 className="font-heading text-foreground text-5xl font-medium text-balance">
-                      {t.fullLabel}
-                    </h3>
-                    {t.badge && (
-                      <span className="bg-primary px-3 py-1 text-xs font-semibold text-balance text-white">
-                        {t.badge}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-muted-foreground col-span-2 text-2xl/9">
-                    {t.description}
-                  </p>
-                </motion.div>
-              ))}
-          </AnimatePresence>
+          <div className="relative min-h-48 lg:min-h-36">
+            <AnimatePresence mode="wait">
+              {tabs
+                .filter((t) => t.value === activeTab)
+                .map((t) => (
+                  <motion.div
+                    key={t.value}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: easeOut }}
+                    className="absolute inset-0 grid gap-10 lg:grid-cols-3 lg:items-start"
+                  >
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="font-heading text-foreground text-5xl font-medium text-balance">
+                        {t.fullLabel}
+                      </h3>
+                      {t.badge && (
+                        <span className="bg-primary px-3 py-1 text-xs font-semibold text-balance text-white">
+                          {t.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-muted-foreground col-span-2 text-2xl/9">
+                      {t.description}
+                    </p>
+                  </motion.div>
+                ))}
+            </AnimatePresence>
+          </div>
         </motion.div>
 
         {/* Program Unggulan */}
@@ -138,7 +137,7 @@ export function ProgramSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.35, ease: easeOut }}
-          className="mt-20"
+          className="mt-40"
         >
           <div className="grid gap-10 sm:grid-cols-2">
             <div className="flex flex-col">
@@ -147,14 +146,14 @@ export function ProgramSection() {
                 src="/hehe.jpg"
                 width={400}
                 height={400}
-                className="h-100 w-full object-cover"
+                className="h-160 w-full object-cover"
               />
             </div>
             <div className="flex flex-col justify-between">
               <h3 className="font-heading text-foreground mb-8 text-3xl font-medium">
                 Program Unggulan
               </h3>
-              <div className="grid gap-6">
+              <div className="grid divide-y">
                 {unggulan.map((u, i) => (
                   <motion.div
                     key={i}
@@ -165,10 +164,9 @@ export function ProgramSection() {
                       delay: 0.4 + i * 0.07,
                       ease: easeOut,
                     }}
-                    className="flex items-center gap-4"
+                    className="flex items-center gap-4 py-6"
                   >
-                    <div className="bg-primary size-6" />
-                    <span className="text-muted-foreground text-2xl">
+                    <span className="text-muted-foreground text-xl">
                       {u.label}
                     </span>
                   </motion.div>

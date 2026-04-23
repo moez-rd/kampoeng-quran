@@ -1,10 +1,12 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useInView } from "motion/react";
-import { useRef } from "react";
-import type { Variants } from "motion/react";
 import { easeOut, staggerContainer } from "@/lib/animations";
+import { CircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { motion, useInView } from "motion/react";
+import type { Variants } from "motion/react";
+import Image from "next/image";
+import { useRef } from "react";
 
 const ekskul = [
   { label: "Panahan", icon: "🏹" },
@@ -12,17 +14,17 @@ const ekskul = [
   { label: "Futsal", icon: "⚽" },
   { label: "Tenis Meja", icon: "🏓" },
   { label: "Ilmu Kemasyarakatan", icon: "🤝" },
-  { label: "Nasyid / Hadrah", icon: "🎵" },
+  { label: "Nasyid/Hadrah", icon: "🎵" },
   { label: "Tilawah Mujawwad", icon: "📖" },
-  { label: "Public Speaking / Muhadharah", icon: "🎤" },
+  { label: "Public Speaking/Muhadharah", icon: "🎤" },
 ];
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, x: -16 },
+const chipVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: easeOut },
+    y: 0,
+    transition: { duration: 0.45, ease: easeOut },
   },
 };
 
@@ -31,46 +33,79 @@ export function EkskulSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="ekstrakurikuler" className="bg-white py-24 px-6">
-      <div className="mx-auto max-w-4xl" ref={ref}>
+    <section id="ekstrakurikuler">
+      <div className="mx-auto" ref={ref}>
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 32 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: easeOut }}
-          className="mb-14 text-center"
+          transition={{ duration: 0.7, delay: 0.1, ease: easeOut }}
+          className="relative h-180 overflow-hidden bg-black"
         >
-          <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Kegiatan & Minat
-          </span>
-          <h2 className="font-heading mt-3 text-3xl font-bold text-foreground sm:text-4xl">
-            Ekstrakurikuler
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Berbagai kegiatan untuk mengembangkan bakat dan potensi santri
-            secara menyeluruh.
-          </p>
-        </motion.div>
+          {/* Background image */}
+          <Image
+            src="/school2.jpg"
+            alt="Ekstrakurikuler Kampoeng Qur'an"
+            fill
+            className="object-cover object-center"
+          />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="flex flex-wrap justify-center gap-3"
-        >
-          {ekskul.map((e, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="group flex items-center gap-2.5  border border-border bg-[oklch(0.97_0.02_145)] px-5 py-3 transition-all duration-300 hover:border-primary/40 hover:bg-primary/5 hover:shadow-sm cursor-default"
-            >
-              <span className="text-xl transition-transform duration-300 group-hover:scale-110">
-                {e.icon}
-              </span>
-              <span className="text-sm font-medium text-foreground">
-                {e.label}
-              </span>
-            </motion.div>
-          ))}
+          {/* Dark green overlay */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-linear-to-r from-[oklch(0.15_0.12_145/0.98)] via-[oklch(0.15_0.12_145/0.90)] to-[oklch(0.15_0.12_145/0.75)]"
+          />
+
+          {/* Content layer */}
+          <div className="absolute inset-x-0 top-0 mx-auto h-full max-w-7xl px-6 py-20 lg:px-10">
+            <div className="flex h-full flex-col justify-between gap-20 lg:flex-row lg:items-center">
+              {/* Left — heading */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, ease: easeOut }}
+                className="shrink-0"
+              >
+                <span className="text-sm font-semibold tracking-widest text-white/60 uppercase">
+                  Kegiatan &amp; Minat
+                </span>
+                <h2 className="font-heading mt-3 text-3xl font-medium text-white sm:text-5xl">
+                  Ekstrakurikuler
+                </h2>
+                <p className="mt-4 max-w-xs text-base text-white/50">
+                  Berbagai kegiatan untuk mengembangkan bakat dan potensi santri
+                  secara menyeluruh.
+                </p>
+              </motion.div>
+
+              {/* Right — chip list */}
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="flex flex-wrap items-center gap-x-6 gap-y-4"
+              >
+                {ekskul.map((e, i) => (
+                  <motion.div
+                    key={i}
+                    variants={chipVariants}
+                    className="flex items-center gap-6"
+                  >
+                    <span className="text-2xl font-light text-white">
+                      {e.label}
+                    </span>
+                    {i < ekskul.length - 1 && (
+                      <HugeiconsIcon
+                        icon={CircleIcon}
+                        size={14}
+                        strokeWidth={2}
+                        className="shrink-0 text-white/70"
+                      />
+                    )}
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

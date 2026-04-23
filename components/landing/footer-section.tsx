@@ -6,17 +6,17 @@ import { useRef } from "react";
 
 const contacts = [
   {
-    name: "Usth. Anisah Muthmainnah, S.Ak",
+    name: "Usth. Anisah Muthmainnah, S.Ak.",
     phone: "6289532020180",
     display: "0895-3202-0180",
   },
   {
-    name: "Ust. Fatoni Syakir, S.Sos",
+    name: "Ust. Fatoni Syakir, S.Sos.",
     phone: "6283803780477",
     display: "0838-0378-0477",
   },
   {
-    name: "Usth. Rahmi Ramadona, S.Ag",
+    name: "Usth. Rahmi Ramadona, S.Ag.",
     phone: "6283876467579",
     display: "0838-7646-7579",
   },
@@ -28,7 +28,7 @@ export function FooterSection() {
 
   return (
     <footer id="kontak" className="bg-[oklch(0.18_0.04_145)] text-white">
-      <div className="mx-auto max-w-5xl px-6 py-20" ref={ref}>
+      <div className="mx-auto max-w-7xl px-6 py-20" ref={ref}>
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Branding & Alamat */}
           <motion.div
@@ -37,27 +37,21 @@ export function FooterSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 className="font-heading text-2xl font-bold text-white sm:text-3xl">
-              KAMPOENG QUR'AN IBS
+              Kampoeng Qur&apos;an
             </h2>
-            <p className="mt-2 text-sm text-white/60">
-              Islamic Boarding School
-            </p>
-            <p className="mt-1 text-sm text-white/60">
+            <p className="text-sm text-white/60">Islamic Boarding School</p>
+            <p className="text-sm text-white/60">
               Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap
             </p>
 
             <div className="mt-6 flex items-start gap-3">
-              <span className="mt-0.5 text-lg">📍</span>
-              <address className="not-italic text-sm leading-relaxed text-white/80">
-                Jl. Inpres Dusun 1, Desa Tanjung Atap,
-                <br />
-                Kec. Tanjung Batu, Kab. Ogan Ilir,
-                <br />
-                Sumatera Selatan
+              <address className="max-w-sm text-sm leading-relaxed text-white/80 not-italic">
+                Jl. Inpres Dusun 1, Desa Tanjung Atap, Kec. Tanjung Batu, Kab.
+                Ogan Ilir, Sumatera Selatan
               </address>
             </div>
 
-            <div className="mt-8 flex flex-col gap-1.5 text-[10px] text-white/40 uppercase tracking-wider">
+            <div className="mt-8 flex flex-col text-xs tracking-wider text-white/40">
               <p>SK Dirjen Kemenag RI Tahun 2022 No. 5100160022</p>
               <p>Di bawah naungan Yayasan Kampoeng Qur'an Ancol Tanjung Atap</p>
               <p>SK Kemenkumham No. AHU-0011668.AH.01.04 Tahun 2022</p>
@@ -77,11 +71,11 @@ export function FooterSection() {
             <h3 className="font-heading mb-6 text-lg font-semibold text-white">
               Contact Person
             </h3>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col divide-y divide-white/25">
               {contacts.map((c, i) => (
                 <li
                   key={i}
-                  className="flex items-center justify-between gap-4 rounded-xl bg-white/8 p-4"
+                  className="flex items-center justify-between gap-4 px-4 py-2"
                 >
                   <div>
                     <p className="text-sm font-medium text-white">{c.name}</p>
@@ -92,7 +86,7 @@ export function FooterSection() {
                     href={`https://wa.me/${c.phone}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex shrink-0 items-center gap-1.5  bg-[#25D366] px-3.5 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+                    className="flex shrink-0 items-center gap-1.5 bg-[#25D366] px-3.5 py-2 text-xs font-semibold text-black transition-opacity hover:opacity-90"
                   >
                     <svg
                       className="size-3.5"

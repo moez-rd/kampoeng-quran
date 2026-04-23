@@ -1,20 +1,16 @@
 "use client";
 
+import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, easeOut, motion } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 const slides = ["/school.jpg", "/school2.jpg"];
 
-const navLinks = [{ href: "/", label: "Beranda" }];
-
 export function HeroSection() {
-  const pathname = usePathname();
   const [current, setCurrent] = useState(0);
   const [resetKey, setResetKey] = useState(0);
 
@@ -69,51 +65,12 @@ export function HeroSection() {
       </AnimatePresence>
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: easeOut }}
-        className="fixed top-0 z-20 w-full text-white"
+        className="fixed top-0 z-20 w-full"
       >
-        <div className="mx-10 my-4 bg-white/10 p-4">
-          <nav className="flex justify-end">
-            <ul className="flex items-center gap-10 tracking-wide">
-              {navLinks.map(({ href, label }) => {
-                const isActive = pathname === href;
-                return (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      className={[
-                        "relative pb-0.5 transition-colors duration-200",
-                        "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:rounded-full after:bg-white after:transition-all after:duration-300",
-                        isActive
-                          ? "font-semibold after:w-full"
-                          : "after:w-0 hover:after:w-full",
-                      ].join(" ")}
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li>
-                <Button
-                  id="hero-cta-tentang"
-                  variant="outline"
-                  size="lg"
-                  className="h-12 border-white/40 bg-white/10 px-4 text-base text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
-                  onClick={() =>
-                    document
-                      .getElementById("kontak")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                >
-                  Penerimaan Santri
-                </Button>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <Navbar />
       </motion.div>
 
       <div className="relative z-10 flex h-full w-full flex-1 flex-col items-center justify-center">
