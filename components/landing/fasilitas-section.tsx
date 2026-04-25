@@ -6,28 +6,28 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 
 const fasilitas = [
-  { label: "Gedung Milik Sendiri", note: null, image: "/school.jpg" },
-  { label: "Masjid yang Nyaman", note: null, image: "/school2.jpg" },
+  { label: "Gedung Milik Sendiri", note: null, image: "/img/image-1.jpg" },
+  { label: "Masjid yang Nyaman", note: null, image: "/img/image-2.jpg" },
   {
     label: "Kelas Representatif",
     note: "Maks. 15 siswa/kelas",
-    image: "/school.jpg",
+    image: "/img/image-3.jpg",
   },
   {
     label: "Laboratorium IPA",
     note: "Dalam tahap penyelesaian",
-    image: "/school2.jpg",
+    image: "/img/image-4.jpg",
   },
   {
     label: "Laboratorium Komputer",
     note: "Dalam tahap penyelesaian",
-    image: "/school.jpg",
+    image: "/img/image-5.jpg",
   },
-  { label: "Asrama Putra & Putri", note: null, image: "/school2.jpg" },
-  { label: "Halaman Bermain", note: null, image: "/school.jpg" },
-  { label: "Lapangan Olahraga", note: null, image: "/school2.jpg" },
-  { label: "Kantin", note: null, image: "/school.jpg" },
-  { label: "Gazebo / Saung", note: null, image: "/school2.jpg" },
+  { label: "Asrama Putra & Putri", note: null, image: "/img/image-6.jpg" },
+  { label: "Halaman Bermain", note: null, image: "/img/image-7.jpg" },
+  { label: "Lapangan Olahraga", note: null, image: "/img/image-8.jpg" },
+  { label: "Kantin", note: null, image: "/img/image-9.jpg" },
+  { label: "Gazebo / Saung", note: null, image: "/img/image-10.jpg" },
 ];
 
 export function FasilitasSection() {

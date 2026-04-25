@@ -159,7 +159,12 @@ export function ProgramSection() {
         >
           <div className="relative z-10 grid gap-10 sm:grid-cols-2">
             <div className="relative -mx-6 min-h-80 overflow-hidden sm:mx-0 md:min-h-160">
-              <Image alt="" src="/hehe.jpg" fill className="object-cover" />
+              <Image
+                alt=""
+                src="/img/image-12.jpg"
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="flex flex-col justify-between">
               <h3 className="font-heading text-foreground mb-8 text-xl font-medium md:text-3xl">

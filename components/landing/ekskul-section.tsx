@@ -42,7 +42,7 @@ export function EkskulSection() {
         >
           {/* Background image */}
           <Image
-            src="/school2.jpg"
+            src="/img/image-2.jpg"
             alt="Ekstrakurikuler Kampoeng Qur'an"
             fill
             className="object-cover object-center"

@@ -97,7 +97,12 @@ export function PengayaanSection() {
             className="flex flex-col divide-y"
           >
             {pengayaan.map((item, i) => (
-              <motion.li key={i} variants={itemVariants}>
+              <motion.li
+                key={i}
+                variants={itemVariants}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2, ease: easeOut }}
+              >
                 <div className="flex items-center gap-4">
                   <span className="bg-primary/10 text-primary my-4 flex size-20 shrink-0 items-center justify-center">
                     <HugeiconsIcon
@@ -118,8 +123,15 @@ export function PengayaanSection() {
                     {item.children && (
                       <div className="flex flex-wrap gap-x-2 text-xs md:text-sm">
                         {item.children.flat().map((child, childIndex) => (
-                          <span
+                          <motion.span
                             key={childIndex}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : {}}
+                            transition={{
+                              duration: 0.35,
+                              delay: 0.2 + i * 0.08 + childIndex * 0.04,
+                              ease: easeOut,
+                            }}
                             className="flex items-center gap-2"
                           >
                             {childIndex > 0 && (
@@ -128,7 +140,7 @@ export function PengayaanSection() {
                               </span>
                             )}
                             <span>{child.label}</span>
-                          </span>
+                          </motion.span>
                         ))}
                       </div>
                     )}

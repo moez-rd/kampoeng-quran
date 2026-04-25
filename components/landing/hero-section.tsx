@@ -7,7 +7,13 @@ import { AnimatePresence, easeOut, motion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
-const slides = ["/school.jpg", "/school2.jpg"];
+const slides = [
+  "/img/image-1.jpg",
+  "/img/image-2.jpg",
+  "/img/image-3.jpg",
+  "/img/image-4.jpg",
+  "/img/image-5.jpg",
+];
 
 export function HeroSection() {
   const [current, setCurrent] = useState(0);
