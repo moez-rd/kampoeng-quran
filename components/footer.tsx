@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
+import Quran from "./quran";
 
 const contacts = [
   {
@@ -22,14 +23,21 @@ const contacts = [
   },
 ];
 
-export function FooterSection() {
+export function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <footer id="kontak" className="bg-[oklch(0.18_0.04_145)] text-white">
+    <footer
+      id="kontak"
+      className="border-primary relative border-t-2 bg-[oklch(0.18_0.04_145)] text-white md:border-t-4"
+    >
+      <Quran
+        className="text-primary pointer-events-none absolute inset-x-0 -top-9 mx-auto h-10 w-auto md:-top-14.5 md:h-16"
+        strokeWidth={1.6}
+      />
       <div className="mx-auto max-w-7xl px-6 py-20" ref={ref}>
-        <div className="grid gap-12 lg:grid-cols-2">
+        <div className="grid gap-6 md:gap-12 lg:grid-cols-2">
           {/* Branding & Alamat */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -39,13 +47,15 @@ export function FooterSection() {
             <h2 className="font-heading text-2xl font-bold text-white sm:text-3xl">
               Kampoeng Qur&apos;an
             </h2>
-            <p className="text-sm text-white/60">Islamic Boarding School</p>
-            <p className="text-sm text-white/60">
+            <p className="text-xs text-white/60 md:text-sm">
+              Islamic Boarding School
+            </p>
+            <p className="text-xs text-white/60 md:text-sm">
               Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap
             </p>
 
             <div className="mt-6 flex items-start gap-3">
-              <address className="max-w-sm text-sm leading-relaxed text-white/80 not-italic">
+              <address className="max-w-sm text-xs leading-relaxed text-white/80 not-italic md:text-sm">
                 Jl. Inpres Dusun 1, Desa Tanjung Atap, Kec. Tanjung Batu, Kab.
                 Ogan Ilir, Sumatera Selatan
               </address>
@@ -68,18 +78,22 @@ export function FooterSection() {
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-            <h3 className="font-heading mb-6 text-lg font-semibold text-white">
+            <h3 className="font-heading mb-6 font-semibold text-white md:text-lg">
               Contact Person
             </h3>
             <ul className="flex flex-col divide-y divide-white/25">
               {contacts.map((c, i) => (
                 <li
                   key={i}
-                  className="flex items-center justify-between gap-4 px-4 py-2"
+                  className="flex items-center justify-between gap-4 py-2"
                 >
                   <div>
-                    <p className="text-sm font-medium text-white">{c.name}</p>
-                    <p className="mt-0.5 text-sm text-white/60">{c.display}</p>
+                    <p className="text-xs font-medium text-white md:text-sm">
+                      {c.name}
+                    </p>
+                    <p className="mt-0.5 text-xs text-white/60 md:text-sm">
+                      {c.display}
+                    </p>
                   </div>
                   <a
                     id={`whatsapp-contact-${i + 1}`}

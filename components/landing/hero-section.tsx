@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -41,7 +40,7 @@ export function HeroSection() {
   };
   return (
     <header className="relative flex h-200 items-center overflow-hidden">
-      <AnimatePresence mode="sync">
+      <AnimatePresence mode="sync" initial={false}>
         <motion.div
           key={current}
           initial={{ opacity: 0 }}
@@ -64,27 +63,18 @@ export function HeroSection() {
         </motion.div>
       </AnimatePresence>
 
-      <motion.div
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: easeOut }}
-        className="fixed top-0 z-20 w-full"
-      >
-        <Navbar />
-      </motion.div>
-
       <div className="relative z-10 flex h-full w-full flex-1 flex-col items-center justify-center">
-        <div className="mx-auto w-full max-w-460 px-8 lg:px-12 2xl:px-24">
+        <div className="mx-auto w-full max-w-460 px-6 lg:px-12 2xl:px-24">
           <div className="max-w-4xl py-32">
             <motion.button
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: easeOut }}
               onClick={handleScrollToJadwal}
-              className="group mb-6 inline-flex cursor-pointer items-center gap-2 border border-white/30 bg-white/10 px-4 py-1.5 text-sm text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              className="group mb-6 flex cursor-pointer items-center gap-2 border border-white/30 bg-white/10 px-4 py-1.5 text-xs text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:text-sm"
             >
-              <span className="inline-block size-2 animate-pulse rounded-full bg-green-400" />
-              <span>
+              <span className="inline-block size-2 flex-none animate-pulse rounded-full bg-green-400" />
+              <span className="text-left">
                 Penerimaan Santri Baru Tahun Ajaran 2026/2027. Daftar Sekarang
               </span>
               <HugeiconsIcon
@@ -107,7 +97,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: easeOut }}
-              className="mt-4 text-lg font-light text-green-400 sm:text-2xl"
+              className="font-light text-green-400 sm:text-2xl md:mt-4"
             >
               Islamic Boarding School
             </motion.p>
@@ -116,7 +106,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25, ease: easeOut }}
-              className="text-2xl font-light text-white/90"
+              className="font-light text-white/90 md:text-2xl"
             >
               Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap
             </motion.p>
@@ -125,7 +115,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.45, ease: easeOut }}
-              className="mt-10 flex flex-wrap gap-4"
+              className="mt-16 flex flex-col gap-4 md:mt-10 md:flex-row md:flex-wrap"
             >
               <Button
                 id="hero-cta-program"
@@ -161,7 +151,7 @@ export function HeroSection() {
         <button
           onClick={handleNext}
           aria-label="Foto berikutnya"
-          className="absolute top-1/2 right-6 z-20 flex size-12 -translate-y-1/2 items-center justify-center border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-110 hover:bg-white/25 active:scale-95"
+          className="absolute top-1/2 right-6 z-20 hidden size-12 -translate-y-1/2 items-center justify-center border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-110 hover:bg-white/25 active:scale-95 md:flex"
         >
           <HugeiconsIcon icon={ArrowRight01Icon} size={26} strokeWidth={2} />
         </button>

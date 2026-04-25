@@ -1,12 +1,11 @@
 "use client";
 
 import { easeOut, staggerContainer } from "@/lib/animations";
-import { CircleIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { motion, useInView } from "motion/react";
 import type { Variants } from "motion/react";
+import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
+import Seal from "../seal";
 
 const ekskul = [
   { label: "Panahan", icon: "🏹" },
@@ -49,10 +48,15 @@ export function EkskulSection() {
             className="object-cover object-center"
           />
 
+          <Seal
+            className="absolute inset-0 bottom-0 mx-auto h-[150%] w-auto -translate-y-1/3 text-white/70"
+            strokeWidth={1}
+          />
+
           {/* Dark green overlay */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-linear-to-r from-[oklch(0.15_0.12_145/0.98)] via-[oklch(0.15_0.12_145/0.90)] to-[oklch(0.15_0.12_145/0.75)]"
+            className="pointer-events-none absolute inset-0 bg-linear-to-t from-[oklch(0.15_0.12_145/0.98)] via-[oklch(0.15_0.12_145/0.90)] to-[oklch(0.15_0.12_145/0.75)]"
           />
 
           {/* Content layer */}
@@ -82,24 +86,21 @@ export function EkskulSection() {
                 variants={staggerContainer}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="flex flex-wrap items-center gap-x-6 gap-y-4"
+                className="flex flex-wrap items-center gap-x-3 gap-y-4 md:gap-x-6"
               >
                 {ekskul.map((e, i) => (
                   <motion.div
                     key={i}
                     variants={chipVariants}
-                    className="flex items-center gap-6"
+                    className="flex items-center gap-x-3 md:gap-6"
                   >
-                    <span className="text-2xl font-light text-white">
+                    <span className="text-xl font-light text-white md:text-2xl">
                       {e.label}
                     </span>
                     {i < ekskul.length - 1 && (
-                      <HugeiconsIcon
-                        icon={CircleIcon}
-                        size={14}
-                        strokeWidth={2}
-                        className="shrink-0 text-white/70"
-                      />
+                      <span className="text-xl font-semibold text-green-200">
+                        /
+                      </span>
                     )}
                   </motion.div>
                 ))}

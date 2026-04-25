@@ -52,7 +52,7 @@ export function Navbar({ alwaysOpaque = false }: NavbarProps) {
         <nav>
           <ul
             className={[
-              "flex items-center gap-8 text-sm font-medium tracking-wide transition-colors duration-300",
+              "flex items-center gap-4 text-sm font-medium tracking-wide transition-colors duration-300 md:gap-8",
               scrolled ? "text-gray-600" : "text-white/80",
             ].join(" ")}
           >

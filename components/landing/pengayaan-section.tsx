@@ -1,26 +1,51 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useInView } from "motion/react";
-import { useRef } from "react";
-import type { Variants } from "motion/react";
 import { easeOut, staggerContainer } from "@/lib/animations";
+import {
+  AlphabetArabicIcon,
+  Bus03Icon,
+  MentoringIcon,
+  MessageMultiple01Icon,
+  Quran01Icon,
+  TextIcon,
+} from "@hugeicons/core-free-icons";
+import type { IconSvgElement } from "@hugeicons/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { Variants } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
-const pengayaan = [
-  { icon: "🚌", label: "Kunjungan edukatif / rihlah", note: "2× setahun" },
-  { icon: "🇬🇧", label: "English Day" },
-  { icon: "🇸🇦", label: "Arabic Day" },
-  { icon: "💬", label: "Daily Conversation" },
-  { icon: "👥", label: "Mentoring pekanan (BPI)" },
-];
+type SunnahItem = {
+  label: string;
+};
 
-const sunnah = [
-  { icon: "🕌", label: "Salat berjamaah" },
-  { icon: "🌙", label: "Qiyamul lail" },
-  { icon: "📿", label: "Salat sunnah rawatib" },
-  { icon: "🤲", label: "Puasa sunnah" },
-  { icon: "📖", label: "Tilawah surat-surat munjiyat" },
-  { icon: "⭐", label: "Amalan sunnah lainnya" },
+type PengayaanItem = {
+  icon: IconSvgElement;
+  label: string;
+  note?: string;
+  children?: SunnahItem[][];
+};
+
+const pengayaan: PengayaanItem[] = [
+  { icon: Bus03Icon, label: "Kunjungan edukatif / rihlah", note: "2× setahun" },
+  { icon: TextIcon, label: "English Day" },
+  { icon: AlphabetArabicIcon, label: "Arabic Day" },
+  { icon: MessageMultiple01Icon, label: "Daily Conversation" },
+  { icon: MentoringIcon, label: "Mentoring pekanan (BPI)" },
+  {
+    icon: Quran01Icon,
+    label: "Pembiasaan sunnah",
+    children: [
+      [
+        { label: "Salat berjamaah" },
+        { label: "Qiyamul lail" },
+        { label: "Salat sunnah rawatib" },
+        { label: "Puasa sunnah" },
+        { label: "Tilawah surat-surat munjiyat" },
+        { label: "Amalan sunnah lainnya" },
+      ],
+    ],
+  },
 ];
 
 const itemVariants: Variants = {
@@ -37,107 +62,81 @@ export function PengayaanSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="pengayaan-materi" className="px-6 py-24">
-      <div className="mx-auto max-w-5xl" ref={ref}>
+    <section
+      id="pengayaan-materi"
+      className="relative overflow-hidden bg-linear-to-b px-6 py-28"
+    >
+      <div
+        aria-hidden
+        className="bg-primary/8 pointer-events-none absolute -top-32 left-1/2 h-120 w-120 -translate-x-1/2 rounded-full blur-3xl"
+      />
+      <div className="relative mx-auto max-w-6xl" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: easeOut }}
-          className="mb-14 text-center"
+          className="mb-12 text-center"
         >
-          <span className="text-primary text-sm font-semibold tracking-widest uppercase">
+          <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase">
             Lebih dari Sekadar Belajar
           </span>
-          <h2 className="font-heading text-foreground mt-3 text-3xl font-bold sm:text-4xl">
+          <h2 className="font-heading text-foreground mt-3 text-3xl font-medium sm:text-5xl">
             Pengayaan Materi
           </h2>
-          <p className="text-muted-foreground mt-4">
+          <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-base sm:text-lg">
             Program penunjang untuk membangun karakter, kecakapan bahasa, dan
             ketaatan ibadah.
           </p>
         </motion.div>
 
-        <div className="grid gap-10 lg:grid-cols-2">
-          {/* Kegiatan Pengayaan */}
-          <div>
-            <motion.h3
-              initial={{ opacity: 0, x: -16 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, ease: easeOut }}
-              className="font-heading text-foreground mb-6 text-xl font-semibold"
-            >
-              Kegiatan Pengayaan
-            </motion.h3>
-            <motion.ul
-              variants={staggerContainer}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              className="flex flex-col gap-3"
-            >
-              {pengayaan.map((item, i) => (
-                <motion.li
-                  key={i}
-                  variants={itemVariants}
-                  className="hover:border-primary/20 flex items-center gap-4 rounded-2xl border border-white bg-white p-4 shadow-sm transition-all hover:shadow-md"
-                >
-                  <span className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-xl text-xl">
-                    {item.icon}
+        <div className="mx-auto max-w-4xl">
+          <motion.ul
+            variants={staggerContainer}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="flex flex-col divide-y"
+          >
+            {pengayaan.map((item, i) => (
+              <motion.li key={i} variants={itemVariants}>
+                <div className="flex items-center gap-4">
+                  <span className="bg-primary/10 text-primary my-4 flex size-20 shrink-0 items-center justify-center">
+                    <HugeiconsIcon
+                      icon={item.icon}
+                      size={32}
+                      strokeWidth={1.8}
+                    />
                   </span>
                   <div>
-                    <p className="text-foreground text-sm font-medium">
+                    <p className="text-foreground text-lg font-medium md:text-xl">
                       {item.label}
                     </p>
                     {item.note && (
-                      <p className="text-muted-foreground text-xs">
+                      <p className="text-muted-foreground mt-1 text-sm">
                         {item.note}
                       </p>
                     )}
+                    {item.children && (
+                      <div className="flex flex-wrap gap-x-2 text-xs md:text-sm">
+                        {item.children.flat().map((child, childIndex) => (
+                          <span
+                            key={childIndex}
+                            className="flex items-center gap-2"
+                          >
+                            {childIndex > 0 && (
+                              <span className="text-muted-foreground/60">
+                                /
+                              </span>
+                            )}
+                            <span>{child.label}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </div>
-
-          {/* Pembiasaan Sunnah */}
-          <div>
-            <motion.h3
-              initial={{ opacity: 0, x: 16 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, ease: easeOut }}
-              className="font-heading text-foreground mb-6 text-xl font-semibold"
-            >
-              Pembiasaan Sunnah
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-muted-foreground mb-4 text-sm"
-            >
-              Ibadah, akhlak, dan zikir harian
-            </motion.p>
-            <motion.ul
-              variants={staggerContainer}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              className="flex flex-col gap-3"
-            >
-              {sunnah.map((item, i) => (
-                <motion.li
-                  key={i}
-                  variants={itemVariants}
-                  className="hover:border-primary/20 flex items-center gap-4 rounded-2xl border border-white bg-white p-4 shadow-sm transition-all hover:shadow-md"
-                >
-                  <span className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-xl text-xl">
-                    {item.icon}
-                  </span>
-                  <p className="text-foreground text-sm font-medium">
-                    {item.label}
-                  </p>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </div>
+                </div>
+              </motion.li>
+            ))}
+          </motion.ul>
         </div>
       </div>
     </section>

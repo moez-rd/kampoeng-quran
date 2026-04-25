@@ -1,7 +1,9 @@
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lora } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 
 const loraHeading = Lora({ subsets: ["latin"], variable: "--font-heading" });
 
@@ -37,7 +39,13 @@ export default function RootLayout({
         loraHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <div className="fixed inset-x-0 top-0 z-50">
+          <Navbar />
+        </div>
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

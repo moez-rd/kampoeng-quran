@@ -45,10 +45,10 @@ export function FasilitasSection() {
           initial={{ opacity: 0, y: 32 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.15, ease: easeOut }}
-          className="relative h-260 overflow-hidden bg-black"
+          className="relative h-200 overflow-hidden bg-black md:h-260"
         >
           {/* Background image */}
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={activeIndex}
               initial={{ opacity: 0 }}
@@ -73,7 +73,7 @@ export function FasilitasSection() {
           />
 
           {/* Vertical tab list — absolute left */}
-          <div className="absolute inset-x-0 top-0 mx-auto h-full max-w-7xl py-20">
+          <div className="absolute inset-x-0 top-0 mx-auto h-full max-w-7xl px-6 py-20">
             {/* Heading */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -89,7 +89,7 @@ export function FasilitasSection() {
               </h2>
             </motion.div>
 
-            <div className="flex h-full w-100 flex-col gap-8 overflow-y-auto">
+            <div className="flex h-full w-100 flex-col gap-4 overflow-y-auto md:gap-8">
               {fasilitas.map((f, i) => {
                 const isActive = activeIndex === i;
                 return (
@@ -98,7 +98,7 @@ export function FasilitasSection() {
                     onClick={() => setActiveIndex(i)}
                     className={[
                       "group relative flex w-full flex-col items-start px-4 text-left transition-colors duration-200",
-                      "before:absolute before:top-0 before:left-0 before:h-full before:w-[3px] before:transition-all before:duration-300",
+                      "before:absolute before:top-0 before:left-0 before:h-full before:w-0.75 before:transition-all before:duration-300",
                       isActive
                         ? "before:bg-white"
                         : "before:bg-transparent hover:text-white",
@@ -106,7 +106,7 @@ export function FasilitasSection() {
                   >
                     <span
                       className={[
-                        "text-3xl transition-colors duration-200",
+                        "text-xl transition-colors duration-200 md:text-3xl",
                         isActive
                           ? "text-white"
                           : "text-white/50 group-hover:text-white/80",
