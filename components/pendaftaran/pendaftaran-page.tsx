@@ -1,5 +1,7 @@
 "use client";
 
+import { buttonVariants } from "@/components/ui/button";
+
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const waves = [
@@ -49,6 +51,8 @@ const syarat = [
   { label: "Fotokopi rapor SD kelas 5–6 (calon MTs)" },
   { label: "Fotokopi rapor SMP/MTs kelas 8–9 (calon MA)" },
 ];
+
+const registrationFormUrl = "https://example.com/form-pendaftaran";
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 
@@ -154,6 +158,23 @@ export function PendaftaranPage() {
               </li>
             ))}
           </ol>
+
+          <div className="bg-primary mt-12 rounded-3xl p-8 text-white sm:p-10">
+            <h3 className="font-heading mt-2 text-2xl font-medium sm:text-3xl">
+              Daftar Santri
+            </h3>
+            <p className="mt-3 max-w-2xl text-sm text-white/80">
+              Klik tombol di bawah untuk membuka form pendaftaran online.
+            </p>
+            <a
+              href={registrationFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${buttonVariants({ size: "lg", variant: "secondary" })} mt-6`}
+            >
+              Isi Formulir Pendaftaran
+            </a>
+          </div>
         </div>
       </section>
     </div>
