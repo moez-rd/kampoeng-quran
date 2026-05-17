@@ -3,6 +3,9 @@ import { PendaftaranPage } from "@/components/pendaftaran/pendaftaran-page";
 import { client } from "@/lib/sanity";
 import { pendaftaranInfoQuery } from "@/lib/sanity/queries";
 
+// Set revalidation time (in seconds) to enable ISR
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Pendaftaran Santri Baru — Kampoeng Qur'an IBS",
   description:
