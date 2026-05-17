@@ -5,44 +5,32 @@ import { motion } from "motion/react"
 import { useInView } from "motion/react"
 import Image from "next/image"
 import { easeOut } from "@/lib/animations"
+import { formatTanggalSingkat } from "@/lib/format"
+import { urlFor } from "@/lib/sanity"
+import type { SanityImageSource } from "@sanity/image-url"
 
-const news = [
-  {
-    slug: "penerimaan-santri-baru-2025",
-    category: "Pengumuman",
-    date: "15 April 2025",
-    title: "Penerimaan Santri Baru Tahun Ajaran 2025/2026 Telah Dibuka",
-    excerpt:
-      "Kampoeng Qur'an IBS membuka pendaftaran santri baru untuk jenjang MTs, MA, dan Program Mulazamah Tahfizh Intensif. Segera daftar sebelum kuota penuh.",
-    image: "/hehe.jpg",
-  },
-  {
-    slug: "wisuda-tahfizh-2025",
-    category: "Kegiatan",
-    date: "3 Maret 2025",
-    title: "Wisuda Tahfizh 30 Juz Angkatan ke-7 Berlangsung Khidmat",
-    excerpt:
-      "Sebanyak 24 santri berhasil mengkhatamkan hafalan 30 juz pada acara Wisuda Tahfizh yang dihadiri orang tua dan tamu undangan dari berbagai daerah.",
-    image: "/hehe.jpg",
-  },
-  {
-    slug: "juara-olimpiade-sains-2025",
-    category: "Prestasi",
-    date: "18 Februari 2025",
-    title: "Santri Kampoeng Qur'an Raih Juara 1 Olimpiade Sains Nasional",
-    excerpt:
-      "Tim santri dari jenjang MA berhasil meraih medali emas pada Olimpiade Sains Nasional bidang Biologi, membuktikan keseimbangan antara ilmu agama dan sains.",
-    image: "/hehe.jpg",
-  },
-]
-
-const categoryColors: Record<string, string> = {
-  Pengumuman: "bg-blue-100 text-blue-700",
-  Kegiatan: "bg-emerald-100 text-emerald-700",
-  Prestasi: "bg-amber-100 text-amber-700",
+interface NewsSectionProps {
+  items: Array<{
+    _id: string;
+    title: string;
+    type: "berita" | "kegiatan";
+    publishedAt: string;
+    mainImage?: SanityImageSource;
+    excerpt?: string;
+  }>;
 }
 
-export function NewsSection() {
+const categoryColors: Record<string, string> = {
+  berita: "bg-blue-100 text-blue-700",
+  kegiatan: "bg-emerald-100 text-emerald-700",
+}
+
+const categoryLabels: Record<string, string> = {
+  berita: "Pengumuman",
+  kegiatan: "Kegiatan",
+}
+
+export function NewsSection({ items }: NewsSectionProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-80px" })
 
@@ -87,9 +75,9 @@ export function NewsSection() {
 
         {/* Cards */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {news.map((item, i) => (
+          {items?.map((item, i) => (
             <motion.article
-              key={item.slug}
+              key={item._id}
               initial={{ opacity: 0, y: 28 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: 0.1 + i * 0.1, ease: easeOut }}
@@ -97,23 +85,25 @@ export function NewsSection() {
             >
               {/* Thumbnail */}
               <div className="relative h-52 w-full overflow-hidden">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+                {item.mainImage && (
+                  <Image
+                    src={urlFor(item.mainImage).width(600).url()}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                )}
               </div>
 
               {/* Body */}
               <div className="flex flex-1 flex-col p-6">
                 <div className="mb-3 flex items-center gap-3">
                   <span
-                    className={`rounded-full px-3 py-0.5 text-xs font-semibold ${categoryColors[item.category] ?? "bg-gray-100 text-gray-600"}`}
+                    className={`rounded-full px-3 py-0.5 text-xs font-semibold ${categoryColors[item.type] ?? "bg-gray-100 text-gray-600"}`}
                   >
-                    {item.category}
+                    {categoryLabels[item.type] ?? item.type}
                   </span>
-                  <span className="text-muted-foreground text-xs">{item.date}</span>
+                  <span className="text-muted-foreground text-xs">{formatTanggalSingkat(item.publishedAt)}</span>
                 </div>
 
                 <h3 className="font-heading text-foreground mb-2 text-lg font-semibold leading-snug">
@@ -124,7 +114,7 @@ export function NewsSection() {
                 </p>
 
                 <a
-                  href={`/berita/${item.slug}`}
+                  href={`/berita/${item._id}`}
                   className="text-primary inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-70"
                 >
                   Baca selengkapnya

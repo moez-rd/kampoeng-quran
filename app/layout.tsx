@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lora } from "next/font/google";
 import "./globals.css";
+import { client, contactPersonQuery } from "@/lib/sanity";
 
 const loraHeading = Lora({ subsets: ["latin"], variable: "--font-heading" });
 
@@ -23,11 +24,13 @@ export const metadata: Metadata = {
     "Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap. Penerimaan Santri Baru T.A 2026/2027 untuk jenjang MTs, MA, dan Tahfizh Intensif di Ogan Ilir, Sumatera Selatan.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const contacts = await client.fetch(contactPersonQuery);
+
   return (
     <html
       lang="id"
@@ -44,7 +47,7 @@ export default function RootLayout({
           <Navbar />
         </div>
         <main>{children}</main>
-        <Footer />
+        <Footer contacts={contacts ?? []} />
       </body>
     </html>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { PendaftaranPage } from "@/components/pendaftaran/pendaftaran-page";
+import { client } from "@/lib/sanity";
+import { pendaftaranInfoQuery } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Pendaftaran Santri Baru — Kampoeng Qur'an IBS",
@@ -7,6 +9,7 @@ export const metadata: Metadata = {
     "Informasi lengkap pendaftaran santri baru Kampoeng Qur'an Islamic Boarding School T.A 2026/2027. Jadwal, syarat, biaya, dan cara mendaftar untuk jenjang MTs, MA, dan Tahfizh Intensif.",
 };
 
-export default function Page() {
-  return <PendaftaranPage />;
+export default async function Page() {
+  const pendaftaranInfo = await client.fetch(pendaftaranInfoQuery);
+  return <PendaftaranPage info={pendaftaranInfo} />;
 }

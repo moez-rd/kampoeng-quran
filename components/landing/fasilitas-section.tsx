@@ -4,38 +4,24 @@ import { easeOut } from "@/lib/animations";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { urlFor } from "@/lib/sanity";
+import type { SanityImageSource } from "@sanity/image-url";
 
-const fasilitas = [
-  { label: "Gedung Milik Sendiri", note: null, image: "/img/image-1.jpg" },
-  { label: "Masjid yang Nyaman", note: null, image: "/img/image-2.jpg" },
-  {
-    label: "Kelas Representatif",
-    note: "Maks. 15 siswa/kelas",
-    image: "/img/image-3.jpg",
-  },
-  {
-    label: "Laboratorium IPA",
-    note: "Dalam tahap penyelesaian",
-    image: "/img/image-4.jpg",
-  },
-  {
-    label: "Laboratorium Komputer",
-    note: "Dalam tahap penyelesaian",
-    image: "/img/image-5.jpg",
-  },
-  { label: "Asrama Putra & Putri", note: null, image: "/img/image-6.jpg" },
-  { label: "Halaman Bermain", note: null, image: "/img/image-7.jpg" },
-  { label: "Lapangan Olahraga", note: null, image: "/img/image-8.jpg" },
-  { label: "Kantin", note: null, image: "/img/image-9.jpg" },
-  { label: "Gazebo / Saung", note: null, image: "/img/image-10.jpg" },
-];
+interface FasilitasSectionProps {
+  items: Array<{
+    _id: string;
+    name: string;
+    label?: string;
+    image?: SanityImageSource;
+  }>;
+}
 
-export function FasilitasSection() {
+export function FasilitasSection({ items }: FasilitasSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const active = fasilitas[activeIndex];
+  const active = items?.[activeIndex];
 
   return (
     <section id="fasilitas">
@@ -49,21 +35,23 @@ export function FasilitasSection() {
         >
           {/* Background image */}
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: easeOut }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={active.image}
-                alt={active.label}
-                fill
-                className="object-cover object-center"
-              />
-            </motion.div>
+            {active?.image && (
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: easeOut }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={urlFor(active.image).width(1920).url()}
+                  alt={active.name}
+                  fill
+                  className="object-cover object-center"
+                />
+              </motion.div>
+            )}
           </AnimatePresence>
 
           {/* Dark overlay */}
@@ -90,11 +78,11 @@ export function FasilitasSection() {
             </motion.div>
 
             <div className="flex h-full w-100 flex-col gap-4 overflow-y-auto md:gap-8">
-              {fasilitas.map((f, i) => {
+              {items?.map((f, i) => {
                 const isActive = activeIndex === i;
                 return (
                   <button
-                    key={i}
+                    key={f._id}
                     onClick={() => setActiveIndex(i)}
                     className={[
                       "group relative flex w-full flex-col items-start px-4 text-left transition-colors duration-200",
@@ -112,11 +100,11 @@ export function FasilitasSection() {
                           : "text-white/50 group-hover:text-white/80",
                       ].join(" ")}
                     >
-                      {f.label}
+                      {f.name}
                     </span>
-                    {f.note && (
+                    {f.label && (
                       <span className="mt-0.5 text-sm text-white/35">
-                        {f.note}
+                        {f.label}
                       </span>
                     )}
                   </button>

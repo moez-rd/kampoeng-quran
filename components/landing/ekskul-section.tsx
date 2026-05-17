@@ -6,17 +6,13 @@ import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
 import Seal from "../seal";
+import { urlFor } from "@/lib/sanity";
+import type { SanityImageSource } from "@sanity/image-url";
 
-const ekskul = [
-  { label: "Panahan", icon: "🏹" },
-  { label: "Bela Diri", icon: "🥋" },
-  { label: "Futsal", icon: "⚽" },
-  { label: "Tenis Meja", icon: "🏓" },
-  { label: "Ilmu Kemasyarakatan", icon: "🤝" },
-  { label: "Nasyid/Hadrah", icon: "🎵" },
-  { label: "Tilawah Mujawwad", icon: "📖" },
-  { label: "Public Speaking/Muhadharah", icon: "🎤" },
-];
+interface EkskulSectionProps {
+  items: Array<{ _id: string; name: string }>;
+  ekskulImage?: { image: SanityImageSource };
+}
 
 const chipVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -27,7 +23,7 @@ const chipVariants: Variants = {
   },
 };
 
-export function EkskulSection() {
+export function EkskulSection({ items, ekskulImage }: EkskulSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -42,7 +38,7 @@ export function EkskulSection() {
         >
           {/* Background image */}
           <Image
-            src="/img/image-2.jpg"
+            src={ekskulImage?.image ? urlFor(ekskulImage.image).width(1920).url() : "/img/image-2.jpg"}
             alt="Ekstrakurikuler Kampoeng Qur'an"
             fill
             className="object-cover object-center"
@@ -88,16 +84,16 @@ export function EkskulSection() {
                 animate={isInView ? "visible" : "hidden"}
                 className="flex flex-wrap items-center gap-x-3 gap-y-4 md:gap-x-6"
               >
-                {ekskul.map((e, i) => (
+                {items?.map((e, i) => (
                   <motion.div
-                    key={i}
+                    key={e._id}
                     variants={chipVariants}
                     className="flex items-center gap-x-3 md:gap-6"
                   >
                     <span className="text-xl font-light text-white md:text-2xl">
-                      {e.label}
+                      {e.name}
                     </span>
-                    {i < ekskul.length - 1 && (
+                    {i < items.length - 1 && (
                       <span className="text-xl font-semibold text-green-200">
                         /
                       </span>

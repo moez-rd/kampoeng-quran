@@ -4,26 +4,17 @@ import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
 import Quran from "./quran";
+import { formatWhatsApp } from "@/lib/format";
 
-const contacts = [
-  {
-    name: "Usth. Anisah Muthmainnah, S.Ak.",
-    phone: "6289532020180",
-    display: "0895-3202-0180",
-  },
-  {
-    name: "Ust. Fatoni Syakir, S.Sos.",
-    phone: "6283803780477",
-    display: "0838-0378-0477",
-  },
-  {
-    name: "Usth. Rahmi Ramadona, S.Ag.",
-    phone: "6283876467579",
-    display: "0838-7646-7579",
-  },
-];
+interface FooterProps {
+  contacts: Array<{
+    _id: string;
+    name: string;
+    whatsapp: string;
+  }>;
+}
 
-export function Footer() {
+export function Footer({ contacts }: FooterProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -82,9 +73,9 @@ export function Footer() {
               Contact Person
             </h3>
             <ul className="flex flex-col divide-y divide-white/25">
-              {contacts.map((c, i) => (
+              {contacts?.map((c, i) => (
                 <li
-                  key={i}
+                  key={c._id}
                   className="flex items-center justify-between gap-4 py-2"
                 >
                   <div>
@@ -92,12 +83,12 @@ export function Footer() {
                       {c.name}
                     </p>
                     <p className="mt-0.5 text-xs text-white/60 md:text-sm">
-                      {c.display}
+                      {formatWhatsApp(c.whatsapp)}
                     </p>
                   </div>
                   <a
                     id={`whatsapp-contact-${i + 1}`}
-                    href={`https://wa.me/${c.phone}`}
+                    href={`https://wa.me/${c.whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex shrink-0 items-center gap-1.5 bg-[#25D366] px-3.5 py-2 text-xs font-semibold text-black transition-opacity hover:opacity-90"

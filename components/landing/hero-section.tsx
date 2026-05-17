@@ -6,22 +6,25 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, easeOut, motion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import { urlFor } from "@/lib/sanity";
+import type { SanityImageSource } from "@sanity/image-url";
 
-const slides = [
-  "/img/image-1.jpg",
-  "/img/image-2.jpg",
-  "/img/image-3.jpg",
-  "/img/image-4.jpg",
-  "/img/image-5.jpg",
-];
+type HeroImage = {
+  asset: { _id: string; url: string };
+  hotspot?: { x: number; y: number };
+} & SanityImageSource;
 
-export function HeroSection() {
+interface HeroSectionProps {
+  slides: HeroImage[];
+}
+
+export function HeroSection({ slides }: HeroSectionProps) {
   const [current, setCurrent] = useState(0);
   const [resetKey, setResetKey] = useState(0);
 
   const next = useCallback(() => {
     setCurrent((prev) => (prev + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   const goTo = useCallback((index: number) => {
     setCurrent(index);
@@ -55,13 +58,15 @@ export function HeroSection() {
           transition={{ duration: 1.4, ease: "easeInOut" }}
           className="absolute inset-0"
         >
-          <Image
-            src={slides[current]}
-            alt={`Slide ${current + 1}`}
-            fill
-            priority={current === 0}
-            className="object-cover object-center"
-          />
+          {slides.length > 0 && (
+            <Image
+              src={urlFor(slides[current]).width(1920).auto("format").url()}
+              alt={`Slide ${current + 1}`}
+              fill
+              priority={current === 0}
+              className="object-cover object-center"
+            />
+          )}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 bg-linear-to-r from-[oklch(0.18_0.06_145/0.90)] via-[oklch(0.18_0.06_145/0.65)] to-[oklch(0.18_0.06_145/0.45)]"
@@ -164,7 +169,7 @@ export function HeroSection() {
 
         {/* ── Dot indicators — bottom right ── */}
         <div className="absolute right-8 bottom-20 z-20 flex items-center gap-2">
-          {slides.map((_, i) => (
+          {slides?.map((_, i) => (
             <button
               key={i}
               onClick={() => goTo(i)}

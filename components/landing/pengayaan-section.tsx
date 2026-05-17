@@ -1,52 +1,15 @@
 "use client";
 
 import { easeOut, staggerContainer } from "@/lib/animations";
-import {
-  AlphabetArabicIcon,
-  Bus03Icon,
-  MentoringIcon,
-  MessageMultiple01Icon,
-  Quran01Icon,
-  TextIcon,
-} from "@hugeicons/core-free-icons";
-import type { IconSvgElement } from "@hugeicons/react";
+import { CheckmarkBadge01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { Variants } from "motion/react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
-type SunnahItem = {
-  label: string;
-};
-
-type PengayaanItem = {
-  icon: IconSvgElement;
-  label: string;
-  note?: string;
-  children?: SunnahItem[][];
-};
-
-const pengayaan: PengayaanItem[] = [
-  { icon: Bus03Icon, label: "Kunjungan edukatif / rihlah", note: "2× setahun" },
-  { icon: TextIcon, label: "English Day" },
-  { icon: AlphabetArabicIcon, label: "Arabic Day" },
-  { icon: MessageMultiple01Icon, label: "Daily Conversation" },
-  { icon: MentoringIcon, label: "Mentoring pekanan (BPI)" },
-  {
-    icon: Quran01Icon,
-    label: "Pembiasaan sunnah",
-    children: [
-      [
-        { label: "Salat berjamaah" },
-        { label: "Qiyamul lail" },
-        { label: "Salat sunnah rawatib" },
-        { label: "Puasa sunnah" },
-        { label: "Tilawah surat-surat munjiyat" },
-        { label: "Amalan sunnah lainnya" },
-      ],
-    ],
-  },
-];
+interface PengayaanSectionProps {
+  items: Array<{ _id: string; name: string; description?: string }>;
+}
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -57,7 +20,7 @@ const itemVariants: Variants = {
   },
 };
 
-export function PengayaanSection() {
+export function PengayaanSection({ items }: PengayaanSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -94,55 +57,31 @@ export function PengayaanSection() {
             variants={staggerContainer}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="flex flex-col divide-y"
+            className="flex flex-col divide-y divide-black/10"
           >
-            {pengayaan.map((item, i) => (
+            {items?.map((item, i) => (
               <motion.li
-                key={i}
+                key={item._id}
                 variants={itemVariants}
                 whileHover={{ y: -2 }}
                 transition={{ duration: 0.2, ease: easeOut }}
               >
-                <div className="flex items-center gap-4">
-                  <span className="bg-primary/10 text-primary my-4 flex size-20 shrink-0 items-center justify-center">
+                <div className="flex items-center gap-4 py-4">
+                  <span className="bg-primary/10 text-primary flex size-14 shrink-0 items-center justify-center rounded-full">
                     <HugeiconsIcon
-                      icon={item.icon}
-                      size={32}
+                      icon={CheckmarkBadge01Icon}
+                      size={28}
                       strokeWidth={1.8}
                     />
                   </span>
                   <div>
                     <p className="text-foreground text-lg font-medium md:text-xl">
-                      {item.label}
+                      {item.name}
                     </p>
-                    {item.note && (
+                    {item.description && (
                       <p className="text-muted-foreground mt-1 text-sm">
-                        {item.note}
+                        {item.description}
                       </p>
-                    )}
-                    {item.children && (
-                      <div className="flex flex-wrap gap-x-2 text-xs md:text-sm">
-                        {item.children.flat().map((child, childIndex) => (
-                          <motion.span
-                            key={childIndex}
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{
-                              duration: 0.35,
-                              delay: 0.2 + i * 0.08 + childIndex * 0.04,
-                              ease: easeOut,
-                            }}
-                            className="flex items-center gap-2"
-                          >
-                            {childIndex > 0 && (
-                              <span className="text-muted-foreground/60">
-                                /
-                              </span>
-                            )}
-                            <span>{child.label}</span>
-                          </motion.span>
-                        ))}
-                      </div>
                     )}
                   </div>
                 </div>

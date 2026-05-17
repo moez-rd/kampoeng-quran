@@ -1,53 +1,38 @@
 "use client";
 
 import { AnimatePresence, motion, useInView } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { easeOut } from "@/lib/animations";
 import Image from "next/image";
 import RubElHizb from "../rub-el-hizb";
 import Seal from "../seal";
+import { urlFor } from "@/lib/sanity";
+import type { SanityImageSource } from "@sanity/image-url";
 
-const tabs = [
-  {
-    value: "mts",
-    label: "MTs",
-    fullLabel: "MTs Kampoeng Qur'an IBS",
-    badge: "Akreditasi A",
-    description:
-      "Madrasah Tsanawiyah setara SMP dengan kurikulum terpadu, memadukan pendidikan formal nasional dengan nilai-nilai Al-Qur'an dan ilmu agama Islam.",
-  },
-  {
-    value: "ma",
-    label: "MA",
-    fullLabel: "MA Kampoeng Qur'an IBS",
-    badge: null,
-    description:
-      "Madrasah Aliyah setara SMA dengan penekanan pada ilmu syar'i dan sains. Mempersiapkan santri untuk jenjang perguruan tinggi maupun dunia kerja.",
-  },
-  {
-    value: "tahfizh",
-    label: "Mulazamah",
-    fullLabel: "Mulazamah/Tahfizh Intensif",
-    badge: "Program Khusus",
-    description:
-      "Program intensif khusus untuk penghafal Al-Qur'an. Santri mendapatkan bimbingan langsung dari guru hafizh berpengalaman hingga khatam 30 juz.",
-  },
-];
+interface ProgramSectionProps {
+  programs: Array<{
+    _id: string;
+    shortName: string;
+    fullName: string;
+    label?: string;
+    description?: string;
+  }>;
+  unggulan: Array<{ _id: string; name: string }>;
+  unggulanImage?: { image: SanityImageSource };
+}
 
-const unggulan = [
-  { label: "Tahsin Al-Qur'an", icon: "📖" },
-  { label: "Tahfizh 30 Juz", icon: "🌙" },
-  { label: "Pengembangan Karakter", icon: "⭐" },
-  { label: "STEAM Curriculum", icon: "🔬" },
-  { label: "Bahasa Arab & Inggris", icon: "🌐" },
-  { label: "Ekstrakurikuler Minat & Bakat", icon: "🎯" },
-];
-
-export function ProgramSection() {
+export function ProgramSection({ programs, unggulan, unggulanImage }: ProgramSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [activeTab, setActiveTab] = useState("mts");
+  
+  // Set default active tab safely based on available data
+  const [activeTab, setActiveTab] = useState("");
+  useEffect(() => {
+    if (programs && programs.length > 0 && !activeTab) {
+      setActiveTab(programs[0].shortName.toLowerCase());
+    }
+  }, [programs, activeTab]);
 
   return (
     <section
@@ -96,12 +81,13 @@ export function ProgramSection() {
           {/* Tab buttons */}
           <div className="mb-10 flex justify-center">
             <div className="border-border flex gap-0 border-b">
-              {tabs.map((t) => {
-                const isActive = activeTab === t.value;
+              {programs?.map((t) => {
+                const tabValue = t.shortName.toLowerCase();
+                const isActive = activeTab === tabValue;
                 return (
                   <button
-                    key={t.value}
-                    onClick={() => setActiveTab(t.value)}
+                    key={t._id}
+                    onClick={() => setActiveTab(tabValue)}
                     className={[
                       "relative px-10 py-3 text-lg font-medium transition-colors duration-200 md:text-2xl",
                       "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:transition-all after:duration-300",
@@ -110,7 +96,7 @@ export function ProgramSection() {
                         : "text-muted-foreground hover:text-foreground hover:after:bg-border after:w-0 hover:after:w-full",
                     ].join(" ")}
                   >
-                    {t.label}
+                    {t.shortName}
                   </button>
                 );
               })}
@@ -120,11 +106,11 @@ export function ProgramSection() {
           {/* Tab content */}
           <div className="relative min-h-48 lg:min-h-36">
             <AnimatePresence mode="wait">
-              {tabs
-                .filter((t) => t.value === activeTab)
+              {programs
+                ?.filter((t) => t.shortName.toLowerCase() === activeTab)
                 .map((t) => (
                   <motion.div
-                    key={t.value}
+                    key={t._id}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
@@ -133,11 +119,11 @@ export function ProgramSection() {
                   >
                     <div className="flex flex-wrap items-center gap-3">
                       <h3 className="font-heading text-foreground text-3xl font-medium text-balance md:text-5xl">
-                        {t.fullLabel}
+                        {t.fullName}
                       </h3>
-                      {t.badge && (
+                      {t.label && (
                         <span className="bg-primary px-3 py-1 text-xs font-semibold text-balance text-white">
-                          {t.badge}
+                          {t.label}
                         </span>
                       )}
                     </div>
@@ -159,21 +145,23 @@ export function ProgramSection() {
         >
           <div className="relative z-10 grid gap-10 sm:grid-cols-2">
             <div className="relative -mx-6 min-h-80 overflow-hidden sm:mx-0 md:min-h-160">
-              <Image
-                alt=""
-                src="/img/image-12.jpg"
-                fill
-                className="object-cover"
-              />
+              {unggulanImage?.image && (
+                <Image
+                  alt="Program Unggulan"
+                  src={urlFor(unggulanImage.image).width(800).url()}
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
             <div className="flex flex-col justify-between">
               <h3 className="font-heading text-foreground mb-8 text-xl font-medium md:text-3xl">
                 Program Unggulan
               </h3>
               <div className="grid divide-y-2 divide-black/10">
-                {unggulan.map((u, i) => (
+                {unggulan?.map((u, i) => (
                   <motion.div
-                    key={i}
+                    key={u._id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{
@@ -184,7 +172,7 @@ export function ProgramSection() {
                     className="flex items-center gap-4 py-6"
                   >
                     <span className="text-muted-foreground text-lg md:text-xl">
-                      {u.label}
+                      {u.name}
                     </span>
                   </motion.div>
                 ))}
