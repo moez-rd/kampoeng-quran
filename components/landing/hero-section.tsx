@@ -101,7 +101,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.1, ease: easeOut }}
               className="font-heading text-4xl leading-tight tracking-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl lg:text-8xl"
             >
-              Kampoeng Qur'an
+              Kampoeng Quran
             </motion.h1>
 
             <motion.p
@@ -119,7 +119,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
               transition={{ duration: 0.7, delay: 0.25, ease: easeOut }}
               className="font-light text-white/90 md:text-2xl"
             >
-              Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap
+              Pondok Pesantren Kampoeng Quran Ancol Tanjung Atap
             </motion.p>
 
             <motion.div

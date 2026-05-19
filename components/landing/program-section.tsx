@@ -22,10 +22,14 @@ interface ProgramSectionProps {
   unggulanImage?: { image: SanityImageSource };
 }
 
-export function ProgramSection({ programs, unggulan, unggulanImage }: ProgramSectionProps) {
+export function ProgramSection({
+  programs,
+  unggulan,
+  unggulanImage,
+}: ProgramSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  
+
   // Set default active tab safely based on available data
   const [activeTab, setActiveTab] = useState("");
   useEffect(() => {
@@ -171,7 +175,7 @@ export function ProgramSection({ programs, unggulan, unggulanImage }: ProgramSec
                     }}
                     className="flex items-center gap-4 py-6"
                   >
-                    <span className="text-muted-foreground text-lg md:text-xl">
+                    <span className="text-lg font-medium md:text-xl">
                       {u.name}
                     </span>
                   </motion.div>

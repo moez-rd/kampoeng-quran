@@ -43,7 +43,7 @@ export function Navbar({ alwaysOpaque = false }: NavbarProps) {
           ].join(" ")}
         >
           <span className="font-heading leading-tight font-semibold tracking-wide">
-            Kampoeng Qur&apos;an
+            Kampoeng Quran
           </span>
           <span className="text-xs">Islamic Boarding School</span>
         </Link>

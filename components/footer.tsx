@@ -36,13 +36,13 @@ export function Footer({ contacts }: FooterProps) {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 className="font-heading text-2xl font-bold text-white sm:text-3xl">
-              Kampoeng Qur&apos;an
+              Kampoeng Quran
             </h2>
             <p className="text-xs text-white/60 md:text-sm">
               Islamic Boarding School
             </p>
             <p className="text-xs text-white/60 md:text-sm">
-              Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap
+              Pondok Pesantren Kampoeng Quran Ancol Tanjung Atap
             </p>
 
             <div className="mt-6 flex items-start gap-3">
@@ -54,7 +54,7 @@ export function Footer({ contacts }: FooterProps) {
 
             <div className="mt-8 flex flex-col text-xs tracking-wider text-white/40">
               <p>SK Dirjen Kemenag RI Tahun 2022 No. 5100160022</p>
-              <p>Di bawah naungan Yayasan Kampoeng Qur'an Ancol Tanjung Atap</p>
+              <p>Di bawah naungan Yayasan Kampoeng Quran Ancol Tanjung Atap</p>
               <p>SK Kemenkumham No. AHU-0011668.AH.01.04 Tahun 2022</p>
             </div>
           </motion.div>
@@ -115,8 +115,8 @@ export function Footer({ contacts }: FooterProps) {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="mt-14 border-t border-white/10 pt-8 text-center text-xs text-white/40"
         >
-          © {new Date().getFullYear()} Kampoeng Qur'an IBS — Pondok Pesantren
-          Kampoeng Qur'an Ancol Tanjung Atap. Semua hak dilindungi.
+          © {new Date().getFullYear()} Kampoeng Quran IBS — Pondok Pesantren
+          Kampoeng Quran Ancol Tanjung Atap. Semua hak dilindungi.
         </motion.div>
       </div>
     </footer>

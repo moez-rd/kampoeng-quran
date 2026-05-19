@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { easeOut, staggerContainer } from "@/lib/animations";
 import { CheckmarkBadge01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -8,7 +9,12 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
 interface PengayaanSectionProps {
-  items: Array<{ _id: string; name: string; description?: string }>;
+  items: Array<{
+    _id: string;
+    name: string;
+    description?: string;
+    image?: { asset?: { url: string } };
+  }>;
 }
 
 const itemVariants: Variants = {
@@ -67,13 +73,29 @@ export function PengayaanSection({ items }: PengayaanSectionProps) {
                 transition={{ duration: 0.2, ease: easeOut }}
               >
                 <div className="flex items-center gap-4 py-4">
-                  <span className="bg-primary/10 text-primary flex size-14 shrink-0 items-center justify-center rounded-full">
-                    <HugeiconsIcon
-                      icon={CheckmarkBadge01Icon}
-                      size={28}
-                      strokeWidth={1.8}
-                    />
-                  </span>
+                  {item.image?.asset?.url ? (
+                    <div className="relative shrink-0 overflow-hidden rounded-lg">
+                      <Image
+                        src={item.image.asset.url}
+                        alt={item.name}
+                        width={280}
+                        height={32}
+                        className="w-32 object-cover md:w-auto"
+                      />
+                      <div
+                        className="pointer-events-none absolute inset-0 bg-linear-to-tr from-green-800/50 to-transparent"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  ) : (
+                    <span className="bg-primary/10 text-primary flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full">
+                      <HugeiconsIcon
+                        icon={CheckmarkBadge01Icon}
+                        size={28}
+                        strokeWidth={1.8}
+                      />
+                    </span>
+                  )}
                   <div>
                     <p className="text-foreground text-lg font-medium md:text-xl">
                       {item.name}

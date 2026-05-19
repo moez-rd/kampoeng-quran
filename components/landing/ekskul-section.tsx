@@ -8,6 +8,8 @@ import { useRef } from "react";
 import Seal from "../seal";
 import { urlFor } from "@/lib/sanity";
 import type { SanityImageSource } from "@sanity/image-url";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { SquareIcon } from "@hugeicons/core-free-icons";
 
 interface EkskulSectionProps {
   items: Array<{ _id: string; name: string }>;
@@ -38,8 +40,12 @@ export function EkskulSection({ items, ekskulImage }: EkskulSectionProps) {
         >
           {/* Background image */}
           <Image
-            src={ekskulImage?.image ? urlFor(ekskulImage.image).width(1920).url() : "/img/image-2.jpg"}
-            alt="Ekstrakurikuler Kampoeng Qur'an"
+            src={
+              ekskulImage?.image
+                ? urlFor(ekskulImage.image).width(1920).url()
+                : "/img/image-2.jpg"
+            }
+            alt="Ekstrakurikuler Kampoeng Quran"
             fill
             className="object-cover object-center"
           />
@@ -94,9 +100,10 @@ export function EkskulSection({ items, ekskulImage }: EkskulSectionProps) {
                       {e.name}
                     </span>
                     {i < items.length - 1 && (
-                      <span className="text-xl font-semibold text-green-200">
-                        /
-                      </span>
+                      <HugeiconsIcon
+                        icon={SquareIcon}
+                        className="size-4 fill-green-200 text-green-200"
+                      />
                     )}
                   </motion.div>
                 ))}

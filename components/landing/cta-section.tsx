@@ -48,9 +48,9 @@ export function CtaSection() {
             Titipkan Putra/Putri Anda di Lingkungan Terbaik
           </h2>
           <p className="text-muted-foreground mx-auto mt-5 max-w-xl leading-relaxed md:text-lg">
-            Bergabunglah bersama ribuan alumni Kampoeng Qur&apos;an IBS yang
-            telah membuktikan keseimbangan antara ilmu agama, akademik, dan
-            karakter mulia.
+            Bergabunglah bersama ribuan alumni Kampoeng Quran IBS yang telah
+            membuktikan keseimbangan antara ilmu agama, akademik, dan karakter
+            mulia.
           </p>
 
           <div className="mt-10 flex flex-wrap justify-center gap-4">

@@ -19,9 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kampoeng Qur'an IBS — Islamic Boarding School",
+  title: "Kampoeng Quran IBS — Islamic Boarding School",
   description:
-    "Pondok Pesantren Kampoeng Qur'an Ancol Tanjung Atap. Penerimaan Santri Baru T.A 2026/2027 untuk jenjang MTs, MA, dan Tahfizh Intensif di Ogan Ilir, Sumatera Selatan.",
+    "Pondok Pesantren Kampoeng Quran Ancol Tanjung Atap. Penerimaan Santri Baru T.A 2026/2027 untuk jenjang MTs, MA, dan Tahfizh Intensif di Ogan Ilir, Sumatera Selatan.",
 };
 
 export default async function RootLayout({

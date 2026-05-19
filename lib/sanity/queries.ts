@@ -77,7 +77,11 @@ export const pengayaanMateriQuery = groq`
   *[_type == "pengayaanMateri"] | order(_createdAt asc) {
     _id,
     name,
-    description
+    description,
+    image{
+      asset->{_id, url},
+      hotspot
+    }
   }
 `;
 
